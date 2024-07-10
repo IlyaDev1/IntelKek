@@ -42,10 +42,13 @@ MainComponent::MainComponent(void)
     deviceManager.initialise(0, 2, nullptr, true);
     deviceManager.addAudioCallback(&sourcePlayer);
     sourcePlayer.setSource(&transportSource);
+
+    startTimer(100);  // Запуск таймера с интервалом 100 мс
 }
 
 MainComponent::~MainComponent(void)
 {
+    stopTimer();  // Остановка таймера
     sourcePlayer.setSource(nullptr);
     deviceManager.removeAudioCallback(&sourcePlayer);
 }
@@ -209,6 +212,19 @@ void MainComponent::sliderValueChanged(juce::Slider* slider)
         if (transportSource.isPlaying())
         {
             transportSource.setPosition(transportSource.getLengthInSeconds() * positionSlider.getValue());
+        }
+    }
+}
+
+void MainComponent::timerCallback()
+{
+    if (transportSource.isPlaying())
+    {
+        double currentPosition = transportSource.getCurrentPosition();
+        double trackLength = transportSource.getLengthInSeconds();
+        if (trackLength > 0.0)
+        {
+            positionSlider.setValue(currentPosition / trackLength, dontSendNotification);
         }
     }
 }
