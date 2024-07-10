@@ -1,4 +1,3 @@
-// MainComponent.h
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
@@ -27,6 +26,8 @@ private:
     CustomButton prevButton{ "Previous" };
     CustomButton openButton{ "Open" };
 
+    Label currentFileLabel;
+
     AudioFormatManager formatManager;
     std::unique_ptr<AudioFormatReaderSource> readerSource;
     AudioTransportSource transportSource;
@@ -37,6 +38,7 @@ private:
     void openButtonClicked();
     void playNextTrack();
     void playPreviousTrack();
+    void updateCurrentFileLabel();
 
     Array<File> audioFiles;
     int currentIndex = -1;

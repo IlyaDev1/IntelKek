@@ -24,6 +24,12 @@ MainComponent::MainComponent(void)
     addAndMakeVisible(openButton);
     openButton.addListener(this);
 
+    // Инициализация метки
+    addAndMakeVisible(currentFileLabel);
+    currentFileLabel.setJustificationType(juce::Justification::centred);
+    currentFileLabel.setFont(juce::Font(16.0f));
+    currentFileLabel.setColour(Label::textColourId, Colours::black);  // Сделать текст черным
+
     // Настройка аудио
     formatManager.registerBasicFormats();
     deviceManager.initialise(0, 2, nullptr, true);
@@ -51,6 +57,7 @@ void MainComponent::resized(void)
     nextButton.setBounds(area.removeFromTop(40).reduced(10));
     prevButton.setBounds(area.removeFromTop(40).reduced(10));
     openButton.setBounds(area.removeFromTop(40).reduced(10));
+    currentFileLabel.setBounds(area.removeFromTop(40).reduced(10));
 }
 
 void MainComponent::buttonClicked(Button* button)
@@ -105,6 +112,7 @@ void MainComponent::filesDropped(const StringArray& files, int x, int y)
             break;
         }
     }
+    updateCurrentFileLabel();
 }
 
 void MainComponent::openButtonClicked()
@@ -135,6 +143,7 @@ void MainComponent::openButtonClicked()
             }
         }
     }
+    updateCurrentFileLabel();
 }
 
 void MainComponent::playNextTrack()
@@ -152,6 +161,7 @@ void MainComponent::playNextTrack()
             transportSource.start();
         }
     }
+    updateCurrentFileLabel();
 }
 
 void MainComponent::playPreviousTrack()
@@ -168,5 +178,18 @@ void MainComponent::playPreviousTrack()
             readerSource.reset(newSource.release());
             transportSource.start();
         }
+    }
+    updateCurrentFileLabel();
+}
+
+void MainComponent::updateCurrentFileLabel()
+{
+    if (currentIndex >= 0 && currentIndex < audioFiles.size())
+    {
+        currentFileLabel.setText(audioFiles[currentIndex].getFileNameWithoutExtension(), juce::dontSendNotification);
+    }
+    else
+    {
+        currentFileLabel.setText("", juce::dontSendNotification);
     }
 }
