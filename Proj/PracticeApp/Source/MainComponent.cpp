@@ -30,6 +30,13 @@ MainComponent::MainComponent(void)
     currentFileLabel.setFont(juce::Font(16.0f));
     currentFileLabel.setColour(Label::textColourId, Colours::black);  // Сделать текст черным
 
+    // Инициализация слайдера
+    addAndMakeVisible(positionSlider);
+    positionSlider.setRange(0.0, 1.0);
+    positionSlider.setSliderStyle(juce::Slider::LinearHorizontal);
+    positionSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    positionSlider.addListener(this);
+
     // Настройка аудио
     formatManager.registerBasicFormats();
     deviceManager.initialise(0, 2, nullptr, true);
@@ -58,6 +65,7 @@ void MainComponent::resized(void)
     prevButton.setBounds(area.removeFromTop(40).reduced(10));
     openButton.setBounds(area.removeFromTop(40).reduced(10));
     currentFileLabel.setBounds(area.removeFromTop(40).reduced(10));
+    positionSlider.setBounds(area.removeFromTop(40).reduced(10));
 }
 
 void MainComponent::buttonClicked(Button* button)
@@ -191,5 +199,16 @@ void MainComponent::updateCurrentFileLabel()
     else
     {
         currentFileLabel.setText("", juce::dontSendNotification);
+    }
+}
+
+void MainComponent::sliderValueChanged(juce::Slider* slider)
+{
+    if (slider == &positionSlider)
+    {
+        if (transportSource.isPlaying())
+        {
+            transportSource.setPosition(transportSource.getLengthInSeconds() * positionSlider.getValue());
+        }
     }
 }

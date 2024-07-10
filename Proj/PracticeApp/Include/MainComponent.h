@@ -5,7 +5,8 @@
 
 class MainComponent : public juce::Component,
     public juce::Button::Listener,
-    public juce::FileDragAndDropTarget
+    public juce::FileDragAndDropTarget,
+    public juce::Slider::Listener
 {
 public:
     MainComponent();
@@ -17,6 +18,7 @@ public:
     void buttonClicked(juce::Button* button) override;
     bool isInterestedInFileDrag(const juce::StringArray& files) override;
     void filesDropped(const juce::StringArray& files, int x, int y) override;
+    void sliderValueChanged(juce::Slider* slider) override;
 
 private:
     CustomButton playButton{ "Play" };
@@ -26,7 +28,8 @@ private:
     CustomButton prevButton{ "Previous" };
     CustomButton openButton{ "Open" };
 
-    Label currentFileLabel;
+    juce::Label currentFileLabel;
+    juce::Slider positionSlider;
 
     AudioFormatManager formatManager;
     std::unique_ptr<AudioFormatReaderSource> readerSource;
