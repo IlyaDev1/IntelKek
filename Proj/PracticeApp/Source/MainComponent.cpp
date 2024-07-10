@@ -29,6 +29,7 @@ MainComponent::MainComponent(void)
     currentFileLabel.setJustificationType(juce::Justification::centred);
     currentFileLabel.setFont(juce::Font(16.0f));
     currentFileLabel.setColour(Label::textColourId, Colours::black);  // Сделать текст черным
+    updateCurrentFileLabel();  // Обновление начального текста
 
     // Инициализация слайдера
     addAndMakeVisible(positionSlider);
@@ -201,7 +202,7 @@ void MainComponent::updateCurrentFileLabel()
     }
     else
     {
-        currentFileLabel.setText("", juce::dontSendNotification);
+        currentFileLabel.setText("Track not selected", juce::dontSendNotification);
     }
 }
 

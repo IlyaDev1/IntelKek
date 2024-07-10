@@ -7,7 +7,7 @@ class MainComponent : public juce::Component,
     public juce::Button::Listener,
     public juce::FileDragAndDropTarget,
     public juce::Slider::Listener,
-    public juce::Timer  // Добавляем наследование от juce::Timer
+    public juce::Timer
 {
 public:
     MainComponent();
@@ -20,7 +20,7 @@ public:
     bool isInterestedInFileDrag(const juce::StringArray& files) override;
     void filesDropped(const juce::StringArray& files, int x, int y) override;
     void sliderValueChanged(juce::Slider* slider) override;
-    void timerCallback() override;  // Объявляем метод timerCallback
+    void timerCallback() override;
 
 private:
     CustomButton playButton{ "Play" };
