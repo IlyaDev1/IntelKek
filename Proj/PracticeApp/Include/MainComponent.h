@@ -1,30 +1,31 @@
+// MainComponent.h
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "CustomButton.h"
 
-class MainComponent : public Component,
-    public Button::Listener,
-    public FileDragAndDropTarget
+class MainComponent : public juce::Component,
+    public juce::Button::Listener,
+    public juce::FileDragAndDropTarget
 {
 public:
-    MainComponent(void);
-    ~MainComponent(void) override;
+    MainComponent();
+    ~MainComponent() override;
 
-    void paint(Graphics&) override;
-    void resized(void) override;
+    void paint(juce::Graphics&) override;
+    void resized() override;
 
-    void buttonClicked(Button* button) override;
-
-    bool isInterestedInFileDrag(const StringArray& files) override;
-    void filesDropped(const StringArray& files, int x, int y) override;
+    void buttonClicked(juce::Button* button) override;
+    bool isInterestedInFileDrag(const juce::StringArray& files) override;
+    void filesDropped(const juce::StringArray& files, int x, int y) override;
 
 private:
-    TextButton playButton;
-    TextButton pauseButton;
-    TextButton stopButton;
-    TextButton nextButton;
-    TextButton prevButton;
-    TextButton openButton;
+    CustomButton playButton{ "Play" };
+    CustomButton pauseButton{ "Pause" };
+    CustomButton stopButton{ "Stop" };
+    CustomButton nextButton{ "Next" };
+    CustomButton prevButton{ "Previous" };
+    CustomButton openButton{ "Open" };
 
     AudioFormatManager formatManager;
     std::unique_ptr<AudioFormatReaderSource> readerSource;

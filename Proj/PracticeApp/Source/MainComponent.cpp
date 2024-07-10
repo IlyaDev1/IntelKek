@@ -7,27 +7,21 @@ MainComponent::MainComponent(void)
 
     // Инициализация кнопок
     addAndMakeVisible(playButton);
-    playButton.setButtonText("Play");
     playButton.addListener(this);
 
     addAndMakeVisible(pauseButton);
-    pauseButton.setButtonText("Pause");
     pauseButton.addListener(this);
 
     addAndMakeVisible(stopButton);
-    stopButton.setButtonText("Stop");
     stopButton.addListener(this);
 
     addAndMakeVisible(nextButton);
-    nextButton.setButtonText("Next");
     nextButton.addListener(this);
 
     addAndMakeVisible(prevButton);
-    prevButton.setButtonText("Previous");
     prevButton.addListener(this);
 
     addAndMakeVisible(openButton);
-    openButton.setButtonText("Open");
     openButton.addListener(this);
 
     // Настройка аудио
